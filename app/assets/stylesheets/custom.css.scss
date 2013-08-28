@@ -1,3 +1,5 @@
+@import "twitter/bootstrap";
+
 /* mixins, variables, etc. */
 
 $grayMediumLight: #eaeaea;
@@ -170,7 +172,10 @@ input {
   }
 }
 
-.field_with_errors {
-  @extend .control-label;
-  @extend .has-error;
+.field_with_errors > input {
+	border-width: 2px;
+	border-style: solid;
+	border-color: #b94a48;
+	-webkit-box-shadow: inset 0 1px 1px rgba(240, 0, 0, 0.075);
+	          box-shadow: inset 0 1px 1px rgba(240, 0, 0, 0.075);
 }
