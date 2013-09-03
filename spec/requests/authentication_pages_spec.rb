@@ -9,6 +9,8 @@ describe "Authentication" do
 
     it { should have_content('Sign in') }
     it { should have_title('Sign in') }
+    it { should_not have_link('Profile') }
+    it { should_not have_link('Settings') }
   end
   
   describe "signin" do
@@ -20,6 +22,7 @@ describe "Authentication" do
       it { should have_title('Sign in') }
       it { should have_selector('div.alert.alert-error', text: 'Invalid') }
       
+      
       describe "after visiting another page" do
         before { click_link "Home" }
         it { should_not have_selector('div.alert.alert-error') }
@@ -28,11 +31,7 @@ describe "Authentication" do
     
     describe "with valid inforamtion" do
       let(:user) { FactoryGirl.create(:user) }
-      before do
-        fill_in "Email", with: user.email.upcase
-        fill_in "Password", with: user.password
-        click_button "Sign in"
-      end
+      before { sign_in user }
       
       it { should have_title(user.name) }
       it { should have_link('Users', href: users_path) }
@@ -65,6 +64,20 @@ describe "Authentication" do
 
           it "should render the desired protected page" do
             expect(page).to have_title('Edit user')
+          end
+          
+          describe "when signing in again" do
+            before do
+              delete signout_path
+              visit signin_path
+              fill_in "Email",    with: user.email
+              fill_in "Password", with: user.password
+              click_button "Sign in"
+            end
+
+            it "should render the default (profile) page" do
+              expect(page).to have_title(user.name)
+            end
           end
         end
       end
