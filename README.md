@@ -5,3 +5,4 @@ the [*Ruby on Rails Tutorial*](http://railstutorial.org/)
 by [Michael Hartl](http://michaelhartl.com/).
 
 Attempt #3..
+Slightly modified to include Bootstrap 3 
